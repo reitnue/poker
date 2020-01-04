@@ -3,38 +3,25 @@ using namespace std;
 #include <stdio.h>
 #include <string.h>
 
-class Card
-{
-    int rank;
-    char suit;
-public:
-    Card(int, char);
-    ~Card();
-    int getRank();
-    char getSuit();
-};
+#include "card.hpp"
+
+// char SUITS[4] = {'C', 'D', 'H', 'S'};
+// int RANKS[13] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 
 Card::Card(int initialRank, char initialSuit)
 {
-	rank = initialRank;
-	suit = initialSuit;
+    rank = initialRank;
+    suit = initialSuit;
 }
 
-Card::~Card() {}
+Card::~Card() { cerr << "card " << rank << suit << " de-allocated\n"; }
 
-int Card::getRank()
-{
-	return rank;
-}
-char Card::getSuit()
-{
-	return suit;
-}
+bool Card::operator==(const Card &other) { return rank == other.rank; }
+bool Card::operator!=(const Card &other) { return rank != other.rank; }
+bool Card::operator< (const Card &other) { return rank <  other.rank; }
+bool Card::operator> (const Card &other) { return rank >  other.rank; }
+bool Card::operator<=(const Card &other) { return rank <= other.rank; }
+bool Card::operator>=(const Card &other) { return rank >= other.rank; }
 
-int main() {
-  cout << "Hello World!\n";
-  Card aceSpade(14, 'S');
-  cout << aceSpade.getRank();
-  cout << aceSpade.getSuit();
-  return 0;
-}
+int  Card::getRank() { return rank; }
+char Card::getSuit() { return suit; }
