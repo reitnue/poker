@@ -12,15 +12,22 @@ using namespace std;
 
 Deck::Deck()
 {
-    // srand ( unsigned ( time(0) ) ); // uncomment for randomness
-    
-    deck.reserve(52);
-    int rank_index, suit_index;
-    for (rank_index = 0; rank_index < 13; rank_index++)
+    srand ( unsigned ( time(0) ) ); // uncomment for randomness
+}
+
+Deck::Deck(bool standard)
+{
+    Deck();
+    if (standard == true)
     {
-        for (suit_index = 0; suit_index < 4; suit_index++)
+        deck.reserve(52);
+        int rank_index, suit_index;
+        for (rank_index = 0; rank_index < 13; rank_index++)
         {
-            deck.push_back(Card(RANKS[rank_index], SUITS[suit_index]));
+            for (suit_index = 0; suit_index < 4; suit_index++)
+            {
+                deck.push_back(Card(RANKS[rank_index], SUITS[suit_index]));
+            }
         }
     }
 }
@@ -38,24 +45,34 @@ void Deck::shuffle()
     return;
 }
 
+void Deck::add(Card other)
+{
+    deck.push_back(other);
+    return;
+}
 Card Deck::deal()
 {
-    Card temp = deck.back();
+    if (this->size() == 0)
+    {
+        cerr << "Deck Empty" << endl;
+        return Card();
+    }
+    Card temp = deck.front();
     cerr << "deal " << temp << endl;
-    deck.pop_back();
+    deck.erase(deck.begin());
     return temp;
 }
 
 
-int main() {
-    Deck temp_deck;
-    temp_deck.shuffle();
-    cerr << "deck" << endl;
-    cout << Card(3, 'S');
-    temp_deck.deal();
-    temp_deck.deal();
-    cout << temp_deck.size() << '\n';
-    // // int i;
-    cerr << "end" << endl;
-    return 0;
-}
+// int main() {
+//     Deck temp_deck;
+//     temp_deck.shuffle();
+//     cerr << "deck" << endl;
+//     temp_deck.add(Card(3, 'S'));
+//     cout << temp_deck.deal();
+//     temp_deck.deal();
+//     cout << temp_deck.size() << '\n';
+//     // // int i;
+//     cerr << "end" << endl;
+//     return 0;
+// }
